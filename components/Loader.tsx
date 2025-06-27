@@ -101,7 +101,7 @@ const Loader = () => {
             "lyrical",
             "imaginative",
             "soulful",
-          ].map((word, idx) => (
+          ].map((word) => (
             <h1
               key={word}
               className="text-white text-6xl h-[70px] flex items-center"

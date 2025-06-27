@@ -16,7 +16,6 @@ interface FilmCardProps {
   genre: string[];
   description: string;
   videoSrc: string;
-  className: string;
 }
 
 const FilmCard = ({
@@ -30,7 +29,6 @@ const FilmCard = ({
   runtime,
   genre,
   description,
-  className,
   videoSrc,
 }: FilmCardProps) => {
   const [flipped, setFlipped] = useState(false);
