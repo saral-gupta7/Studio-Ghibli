@@ -72,11 +72,9 @@ const Films = () => {
             genre,
             description,
             videoSrc,
-            className,
             // class
           }) => (
             <FilmCard
-              className={className}
               key={title}
               title={title}
               originalTitle={originalTitle}
