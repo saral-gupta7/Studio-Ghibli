@@ -37,7 +37,7 @@ const Films = () => {
         opacity: 1,
       });
 
-      const reversedIndex = (i) => elements.length - 1 - i;
+      const reversedIndex = (i: number) => elements.length - 1 - i;
 
       tl.to(elements, {
         y: 0,
