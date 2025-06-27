@@ -1,76 +1,63 @@
 "use client";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { ScrollTrigger, SplitText } from "gsap/all";
 // import { useRef, useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 const Loader = () => {
   useGSAP(() => {
+    const text = new SplitText(".title", { type: "chars words lines" });
     document.body.style.overflow = "hidden";
     document.body.style.height = "100vh";
 
     const tl = gsap.timeline({
-      defaults: {
-        // ease: "elastic.inOut",
-        duration: 0.8,
-      },
+      defaults: { duration: 0.8 },
     });
 
-    gsap.set("#loader-section", {
-      backgroundColor: "#000",
-      // opacity: 0,
-    });
     gsap.set(".words", {
-      opacity: 0,
+      opacity: 1, // ← Always visible
+      y: 0,
     });
 
-    tl.to("#loader-section", { opacity: 1 })
-      .to(".inner-section", {
-        width: "75%",
-        height: "75%",
-        ease: "expo.inOut",
-        x: "-8vw",
-        y: "5vh",
-      })
-      .to(".words", {
-        opacity: 1,
-      });
+    // Shrink container before image animation
 
-    const wordStepY = 70;
+    const wordStepY = 90;
 
+    // Animate images and words together
     [1, 2, 3, 4, 5].forEach((idx) => {
       tl.to(
-        `.loader:nth-child(${idx})`, // Animate each loader one by one
+        `.image-${idx}`, // ← safer targeting
         {
           width: 0,
           ease: "expo.inOut",
-          duration: 1,
+          duration: 0.5,
         },
-        `+=0.3` // delay before this one starts (tweak this if needed)
+        `+=0.4`
       ).to(
-        ".words",
+        text.chars,
         {
           y: -wordStepY * idx,
-
-          duration: 0.5,
+          // x: 100,
+          duration: 0.3,
           ease: "power2.out",
+          stagger: 0.01,
         },
-        "<-0.3" // Start word animation at the same time as image
+        "<-0.3" // parallel with image animation
       );
     });
+
+    // Optional: fade out loader after last frame
     tl.to("#loader-section", {
-      autoAlpha: 0,
+      // autoAlpha: 0,
+      y: "-100%",
       duration: 1,
-      ease: "power2.inOut",
+      ease: "expo.inOut",
+      onComplete: () => {
+        document.body.style.overflow = "auto";
+        document.body.style.height = "auto";
+      },
     });
-    // Keep the last word visible
-    // tl.to(`#loader-word-5`, { opacity: 1, duration: 0.5 }, "+=0.7");
-    //
-    return () => {
-      document.body.style.overflow = "auto";
-      document.body.style.height = "auto";
-    };
   }, []);
 
   return (
@@ -86,29 +73,29 @@ const Loader = () => {
             alt={`Loader image ${num}`}
             width={1920}
             height={2880}
-            className="loader h-full w-full object-cover absolute inset-0"
+            className={`loader-image image-${num} h-full w-full object-cover absolute inset-0 brightness-80`}
             style={{ zIndex: 6 - num }}
           />
         ))}
-      </div>
 
-      <div className="h-[70px] overflow-hidden z-50 absolute right-25 top-30">
-        <div className="words flex flex-col transition-transform duration-500">
-          {[
-            "enchanting",
-            "timeless",
-            "whimsical",
-            "lyrical",
-            "imaginative",
-            "soulful",
-          ].map((word) => (
-            <h1
-              key={word}
-              className="text-white text-6xl h-[70px] flex items-center"
-            >
-              {word}
-            </h1>
-          ))}
+        <div className="h-[90px] overflow-hidden z-50 absolute bottom-5 right-5 font-semibold tracking-widest uppercase font-playfair ">
+          <div className="words flex flex-col items-end transition-transform duration-500">
+            {[
+              "enchanting",
+              "timeless",
+              "whimsical",
+              "lyrical",
+              "imaginative",
+              "soulful",
+            ].map((word) => (
+              <h1
+                key={word}
+                className="text-[#CBD2D9] text-8xl h-[90px] flex items-center mix-blend-difference title"
+              >
+                {word}
+              </h1>
+            ))}
+          </div>
         </div>
       </div>
     </div>
