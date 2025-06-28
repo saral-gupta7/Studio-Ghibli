@@ -22,6 +22,10 @@ const Loader = () => {
     gsap.set("#hero", {
       filter: "blur(5px)",
     });
+    tl.to("#loader-section", {
+      opacity: 1,
+      ease: "expo.inOut",
+    });
 
     const wordStepY = 90;
 
