@@ -19,8 +19,9 @@ const Loader = () => {
       opacity: 1, // ← Always visible
       y: 0,
     });
-
-    // Shrink container before image animation
+    gsap.set("#hero", {
+      filter: "blur(5px)",
+    });
 
     const wordStepY = 90;
 
@@ -48,21 +49,33 @@ const Loader = () => {
     });
 
     // Optional: fade out loader after last frame
+    //
+
     tl.to("#loader-section", {
       // autoAlpha: 0,
-      y: "-100%",
-      duration: 1,
+      // y: "-100%",
+      transformOrigin: "top top",
+      height: 0,
+
+      duration: 1.5,
       ease: "expo.inOut",
       onComplete: () => {
         document.body.style.overflow = "auto";
         document.body.style.height = "auto";
       },
-    });
+    }).to(
+      "#hero",
+      {
+        filter: "blur(0px)",
+      },
+      "<+=0.2"
+    );
   }, []);
 
   return (
     <div
-      className="fixed w-full h-screen flex-center border-2 bg-[#000] overflow-hidden z-50"
+      className="fixed w-full h-screen flex-center bg-[#000] overflow-hidden z-50"
+      style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
       id="loader-section"
     >
       <div className="w-full h-full relative inner-section">
@@ -90,7 +103,7 @@ const Loader = () => {
             ].map((word) => (
               <h1
                 key={word}
-                className="text-[#CBD2D9] text-8xl h-[90px] flex items-center mix-blend-difference title"
+                className="text-[#CBD2D9] text-5xl md:text-8xl h-[90px] flex items-center mix-blend-difference title"
               >
                 {word}
               </h1>
