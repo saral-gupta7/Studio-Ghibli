@@ -8,9 +8,9 @@ const Home = () => {
       <ReactLenis root />
       <Hero />
       <Films />
+      {/* <div className="h-screen bg-black"></div>
       <div className="h-screen bg-black"></div>
-      <div className="h-screen bg-black"></div>
-      <div className="h-screen bg-black"></div>
+      <div className="h-screen bg-black"></div> */}
     </div>
   );
 };

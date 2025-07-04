@@ -115,8 +115,6 @@ const Films = () => {
               genre={genre}
               description={description}
               videoSrc={videoSrc}
-              isFlipped={activeCard === index}
-              setActiveCard={setActiveCard}
             />
           )
         )}
