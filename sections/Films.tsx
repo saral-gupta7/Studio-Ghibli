@@ -103,7 +103,6 @@ const Films = () => {
             index
           ) => (
             <FilmCard
-              index={index}
               key={title}
               title={title}
               originalTitle={originalTitle}
