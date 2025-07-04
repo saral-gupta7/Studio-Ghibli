@@ -1,22 +1,41 @@
 "use client";
 import FilmCard from "@/components/FilmCard";
 import { ghibliMovies } from "@/constants/constant";
-import { useRef } from "react";
+import { useState } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, SplitText } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(SplitText);
 
 const Films = () => {
-  const filmRef = useRef(null);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   useGSAP(() => {
-    const titleText = new SplitText(".title", {
-      type: "chars, words, line",
+    const titleText = new SplitText(".title-text", {
+      type: "chars words lines",
     });
     const mm = gsap.matchMedia();
     const elements = gsap.utils.toArray(".card");
     mm.add("(min-width: 1024px)", () => {
+      gsap.fromTo(
+        titleText.chars,
+        {
+          y: -100,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.02,
+          scrollTrigger: {
+            trigger: "#film",
+            start: "top 80%", // Animates when the section is just entering the viewport
+            toggleActions: "play none reset none",
+            // scrub: true,
+          },
+        }
+      );
+      // );
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ".card",
@@ -27,9 +46,6 @@ const Films = () => {
         defaults: {
           ease: "none",
         },
-      });
-      gsap.to(titleText.chars, {
-        scale: 1.03,
       });
       gsap.set(elements, {
         y: (i) => i * 200,
@@ -51,30 +67,43 @@ const Films = () => {
   }, []);
 
   return (
-    <section className="min-h-screen w-full max-w-screen-xl mx-auto bg-[#F8F9FA] overflow-hidden">
+    <section
+      className="min-h-screen w-full max-w-screen-xl mx-auto bg-[#F8F9FA] overflow-hidden text-black"
+      id="film"
+    >
       <div className="p-10 flex flex-col gap-3 h-1/4">
-        <h1 className="text-5xl font-playfair font-bold title">Iconic Films</h1>
+        <h1 className="text-5xl font-playfair font-bold title-text overflow-hidden">
+          Iconic Films
+        </h1>
         <p className="text-xl">
           Explore the magical worlds created by Studio Ghibli.
         </p>
       </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 h-3/4 rounded-xl gap-5 p-10 place-items-center -mt-3">
+      <div
+        className={`grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 h-3/4 rounded-xl gap-5 p-10 place-items-center -mt-3 transition-all duration-300 ${
+          activeCard !== null ? "blur-sm pointer-events-none" : ""
+        }`}
+      >
         {ghibliMovies.map(
-          ({
-            title,
-            originalTitle,
-            originalTitleRomanised,
-            director,
-            producer,
-            studio,
-            releaseYear,
-            runtime,
-            genre,
-            description,
-            videoSrc,
-            // class
-          }) => (
+          (
+            {
+              title,
+              originalTitle,
+              originalTitleRomanised,
+              director,
+              producer,
+              studio,
+              releaseYear,
+              runtime,
+              genre,
+              description,
+              videoSrc,
+              // class
+            },
+            index
+          ) => (
             <FilmCard
+              index={index}
               key={title}
               title={title}
               originalTitle={originalTitle}
@@ -87,6 +116,8 @@ const Films = () => {
               genre={genre}
               description={description}
               videoSrc={videoSrc}
+              isFlipped={activeCard === index}
+              setActiveCard={setActiveCard}
             />
           )
         )}

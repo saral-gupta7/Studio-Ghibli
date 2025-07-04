@@ -37,12 +37,24 @@ const Hero = () => {
       type: "words chars lines",
     });
 
-    gsap.to(".ghibli-text", {
-      duration: 2,
-      ease: "none",
-      text: "Hayao Miyazaki",
-      // repeat: -2,
-    });
+    // gsap.to(".ghibli-text", {
+    //   duration: 2,
+    //   ease: "none",
+    //   text: "Hayao Miyazaki",
+    //   // repeat: -2,
+    // });
+    // gsap.fromTo(
+    //   headerText.chars,
+    //   {
+    //     y: -100,
+    //     opacity: 0,
+    //   },
+    //   {
+    //     y: 0,
+    //     opacity: 1,
+    //     stagger: 0.1,
+    //   }
+    // );
 
     gsap.fromTo(
       headerText.words,
@@ -52,9 +64,9 @@ const Hero = () => {
       },
       {
         y: 0,
-        stagger: 0.2,
+        stagger: 0,
         opacity: 1,
-        duration: 0.3,
+        duration: 0.1,
       }
     );
   });
@@ -80,12 +92,12 @@ const Hero = () => {
       >
         <source src="/videos/clipped.mp4" type="video/mp4" />
       </motion.video>
-      <motion.div className="abs-center border-2 w-full h-full flex-center flex-col gap-5">
-        <h1 className="text-5xl font-bold header">
+      <motion.div className="abs-center w-full h-full flex-center flex-col gap-5 text-center">
+        <h1 className="text-4xl md:text-6xl font-semibold header font-playfair ">
           Welcome to the world of{" "}
           <span className="ghibli-text">Studio Ghibli</span>
         </h1>
-        <p className="text-2xl header">
+        <p className="text-md md:text-2xl header">
           Where dreams take flight and stories live forever.
         </p>
       </motion.div>
