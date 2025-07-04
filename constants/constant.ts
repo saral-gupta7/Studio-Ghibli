@@ -77,3 +77,13 @@ export const ghibliMovies: GhibliMovie[] = [
   },
   // ...add more movies as needed
 ];
+
+export const galleryImages = [
+  { url: "/images/gallery/aya.jpg", key: "aya" },
+  { url: "/images/gallery/chihiro.jpg", key: "chihiro" },
+  { url: "/images/gallery/howl.jpg", key: "howl" },
+  { url: "/images/gallery/kaguyahime.jpg", key: "kaguyahime" },
+  { url: "/images/gallery/kimitachi.jpg", key: "kimitachi" },
+  { url: "/images/gallery/mimi.jpg", key: "mimi" },
+  { url: "/images/gallery/ponyo.jpg", key: "ponyo" },
+];

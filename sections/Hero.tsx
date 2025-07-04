@@ -7,78 +7,28 @@ import { motion } from "motion/react";
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(TextPlugin);
 
-// const containerVariant = {
-//   hidden: {},
-//   visible: {
-//     transition: {
-//       staggerChildren: 0.3,
-//       delayChildren: 0.5,
-//     },
-//   },
-// };
-
-// const childVariant = {
-//   hidden: {
-//     opacity: 0,
-//     y: -20,
-//   },
-//   visibile: {
-//     opacity: 1,
-//     y: 0,
-//     transition: {
-//       ease: "power2.inOut",
-//       duration: 0.3,
-//     },
-//   },
-// };
 const Hero = () => {
   useGSAP(() => {
-    const headerText = new SplitText(".header", {
-      type: "words chars lines",
-    });
-
-    // gsap.to(".ghibli-text", {
-    //   duration: 2,
-    //   ease: "none",
-    //   text: "Hayao Miyazaki",
-    //   // repeat: -2,
-    // });
-    // gsap.fromTo(
-    //   headerText.chars,
-    //   {
-    //     y: -100,
-    //     opacity: 0,
-    //   },
-    //   {
-    //     y: 0,
-    //     opacity: 1,
-    //     stagger: 0.1,
-    //   }
-    // );
-
-    gsap.fromTo(
-      headerText.words,
-      {
-        y: -100,
-        opacity: 0,
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
       },
-      {
-        y: 0,
-        stagger: 0,
-        opacity: 1,
-        duration: 0.1,
-      }
-    );
+    });
+    tl.to("#hero", {
+      scale: 0.95,
+      y: -100,
+      opacity: 0.6,
+    });
   });
-
   return (
     <motion.div
       className="min-h-screen w-full overflow-hidden relative"
       id="hero"
     >
       <motion.video
-        // initial={{ scale: 0.8 }}
-        // animate={{ scale: 1 }}
         transition={{
           duration: 0.5,
           delay: 0.1,

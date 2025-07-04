@@ -1,5 +1,6 @@
 "use client";
 import Films from "@/sections/Films";
+import Gallery from "@/sections/Gallery";
 import Hero from "@/sections/Hero";
 import { ReactLenis } from "lenis/react";
 const Home = () => {
@@ -8,9 +9,8 @@ const Home = () => {
       <ReactLenis root />
       <Hero />
       <Films />
-      {/* <div className="h-screen bg-black"></div>
+      <Gallery />
       <div className="h-screen bg-black"></div>
-      <div className="h-screen bg-black"></div> */}
     </div>
   );
 };

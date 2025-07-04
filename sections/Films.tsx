@@ -15,67 +15,69 @@ const Films = () => {
     const titleText = new SplitText(".title-text", {
       type: "chars words lines",
     });
+
     const mm = gsap.matchMedia();
     const elements = gsap.utils.toArray(".card");
+
     mm.add("(min-width: 1024px)", () => {
-      gsap.fromTo(
-        titleText.chars,
-        {
-          y: -100,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.02,
-          scrollTrigger: {
-            trigger: "#film",
-            start: "top 80%", // Animates when the section is just entering the viewport
-            toggleActions: "play none reset none",
-            // scrub: true,
-          },
-        }
-      );
-      // );
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: ".card",
-          start: "top bottom",
-          end: "+=150%",
+          trigger: "#film",
+          start: "50% bottom",
+          end: "+=100%", // Long enough to scroll cards and then scroll section up
           scrub: true,
         },
-        defaults: {
-          ease: "none",
-        },
-      });
-      gsap.set(elements, {
-        y: (i) => i * 200,
-        xPercent: 300,
-        opacity: 1,
       });
 
-      const reversedIndex = (i: number) => elements.length - 1 - i;
+      // Step 1: Cards slide in from right
+      tl.from(elements, {
+        x: "100%",
+        opacity: 0,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
 
+      ScrollTrigger.create({
+        trigger: "#film",
+        start: "top top",
+        end: "+=50%", // Long enough to scroll cards and then scroll section up
+        scrub: true,
+        // pin: true,
+      });
+      // Step 2: Cards move left and right
       tl.to(elements, {
-        y: 0,
-        xPercent: 0,
-      }).to(elements, {
-        xPercent: -500,
-        y: (i) => reversedIndex(i) * 200,
-        delay: 0.2,
+        x: (i: number) => {
+          if (i % 4 === 0 || i % 4 === 1) return -200;
+          if (i % 4 === 2 || i % 4 === 3) return 200;
+          return 0;
+        },
+        rotation: (i: number) => (i % 4 < 2 ? -5 : 5),
+        ease: "power2.inOut",
+        duration: 1,
       });
+
+      // Optional: change background
+      tl.to(
+        "#film",
+        {
+          backgroundColor: "#000",
+          color: "#fff",
+        },
+        "<+0.2"
+      );
     });
   }, []);
 
   return (
     <section
-      className="min-h-screen w-full max-w-screen-xl mx-auto bg-[#F8F9FA] overflow-hidden text-black"
+      className="min-h-screen w-full mx-auto bg-[url('/images/film-blackground.jpg')] overflow-hidden text-white px-10"
       id="film"
     >
       <div className="p-10 flex flex-col gap-3 h-1/4">
-        <h1 className="text-5xl font-playfair font-bold title-text overflow-hidden">
+        <h1 className=" text-3xl md:text-5xl font-playfair font-bold title-text overflow-hidden">
           Iconic Films
         </h1>
-        <p className="text-xl">
+        <p className="text-md sm:text-xl">
           Explore the magical worlds created by Studio Ghibli.
         </p>
       </div>
@@ -83,6 +85,7 @@ const Films = () => {
         className={`grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 h-3/4 rounded-xl gap-5 p-10 place-items-center -mt-3 transition-all duration-300 ${
           activeCard !== null ? "blur-sm pointer-events-none" : ""
         }`}
+        id="card-container"
       >
         {ghibliMovies.map(
           (

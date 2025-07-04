@@ -35,7 +35,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} antialiased bg-black`}
       >
-        <Loader />
+        <div className="hidden md:block">
+          <Loader />
+        </div>
         {children}
       </body>
     </html>
