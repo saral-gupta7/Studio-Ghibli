@@ -24,7 +24,7 @@ const Hero = () => {
     });
   });
   return (
-    <motion.div
+    <motion.section
       className="min-h-screen w-full overflow-hidden relative"
       id="hero"
     >
@@ -42,16 +42,15 @@ const Hero = () => {
       >
         <source src="/videos/clipped.mp4" type="video/mp4" />
       </motion.video>
-      <motion.div className="abs-center w-full h-full flex-center flex-col gap-5 text-center">
-        <h1 className="text-4xl md:text-6xl font-semibold header font-playfair ">
-          Welcome to the world of{" "}
-          <span className="ghibli-text">Studio Ghibli</span>
+      <motion.div className="abs-center w-full h-full flex-center flex-col gap-5 text-center max-w-4xl font-semibold px-5 tracking-tight">
+        <h1 className="text-4xl md:text-6xl header font-playfair">
+          Begin your journey through the magical worlds of Ghibli.
         </h1>
-        <p className="text-md md:text-2xl header">
+        <p className="text-md md:text-2xl header font-playfair">
           Where dreams take flight and stories live forever.
         </p>
       </motion.div>
-    </motion.div>
+    </motion.section>
   );
 };
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { galleryImages } from "@/constants/constant";
 
-// import { motion } from "motion/react";
+import { motion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
@@ -17,49 +17,60 @@ const imageStyle = {
 
 const Gallery = () => {
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#gallery",
-        start: "10% bottom",
-        end: "+=200%",
-        scrub: true,
-      },
-      defaults: {
-        ease: "expo.inOut",
-      },
-    });
-    tl.fromTo(
-      ".image",
-      {
-        y: -100,
-        opacity: 0,
+    const mm = gsap.matchMedia();
+    const elements = gsap.utils.toArray(".image");
 
-        rotation: (i: number) => (i === 5 ? 0 : i % 4 < 2 ? -5 : 5),
-      },
-      {
-        opacity: 1,
-        rotation: 0,
-        y: 0,
-      }
-    ).to(".image", {
-      x: (i: number) => {
-        if (i === 5) return 0;
-        if (i % 4 === 0 || i % 4 === 1) return -200;
-        if (i % 4 === 2 || i % 4 === 3) return 200;
-        return 0;
-      },
-      opacity: 0,
+    mm.add("(min-width: 1024px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#gallery",
+          start: "10% bottom",
+          end: "+=150%",
+          scrub: true,
+        },
+        defaults: {
+          ease: "expo.inOut",
+        },
+      });
+      tl.fromTo(
+        elements,
+        {
+          y: -100,
+          opacity: 0,
+          rotation: (i: number) => (i % 4 < 2 ? -5 : 5),
+        },
+        {
+          opacity: 1,
+          rotation: 0,
+          y: 0,
+        }
+      ).to(elements, {
+        y: (i: number) => {
+          return 100 * i;
+        },
+        // opacity: 0,
+      });
     });
-  });
+  }, []);
   return (
     <section
       className="min-h-screen bg-black flex-center flex-col py-12 overflow-hidden px-10"
       id="gallery"
     >
-      <div className="flex flex-col gap-10 ">
+      <div className="flex flex-col gap-20 items-center justify-center">
+        <h1 className="font-playfair text-5xl  font-bold text-white">
+          Ghibli Classics You Can&apos;t Miss
+        </h1>
         <div className="flex flex-wrap gap-8 justify-center" id="card-layer-1">
           {galleryImages.map(({ url, key }, idx) => (
-            <div className="flex-center image" id={`image-${idx}`} key={key}>
+            <motion.div
+              className="flex-center image"
+              id={`image-${idx}`}
+              key={key}
+              whileTap={{
+                x: 100,
+              }}
+            >
               <Image
                 src={url}
                 alt={`Gallery image`}
@@ -67,7 +78,7 @@ const Gallery = () => {
                 height={240}
                 style={imageStyle}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

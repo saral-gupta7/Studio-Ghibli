@@ -35,7 +35,7 @@ const FilmCard = ({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const cardVariant = {
-    flip: {
+    flipped: {
       rotateY: 180,
     },
     notFlipped: {
@@ -43,7 +43,6 @@ const FilmCard = ({
     },
   };
 
-  // handles video playback
   const handleMouseEnter = () => {
     setTimeout(() => {
       videoRef.current?.play();
@@ -62,15 +61,15 @@ const FilmCard = ({
       className={`w-full max-w-74 h-120 gap-5 overflow-hidden perspective-[1000px] rounded-xl card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      // whileHover={{ scale: 1.01, y: -4 }}
       transition={{
         duration: 0.3,
       }}
       initial={false}
-      animate={flipped ? "flip" : "notFlipped"}
+      animate={flipped ? "flipped" : "notFlipped"}
     >
       <motion.div
-        className="w-full h-full relative "
+        onClick={() => setFlipped(!flipped)}
+        className="w-full h-full relative"
         style={{ transformStyle: "preserve-3d" }}
         variants={cardVariant}
         transition={{
@@ -96,50 +95,41 @@ const FilmCard = ({
           {/* overlays */}
           <div className="z-1 gradient-text absolute bottom-0 w-full flex flex-col gap-2 h-45"></div>
 
-          <span
-            onClick={() => setFlipped(!flipped)}
-            className="absolute right-3 top-3 text-white "
-          >
-            <Rotate3D className="w-5 h-5 text-white hover:text-gray-300 transition group-hover:animate-bounce" />
-          </span>
-          <div className="absolute bottom-5 text-white tracking-tight z-2 px-5 py-2 flex flex-col gap-2">
+          <div className="absolute bottom-5 text-white z-2 px-5 py-2 flex flex-col gap-2">
             <h1 className="text-2xl font-bold font-playfair">{title}</h1>
             <p className="text-xs text-white/90">{description}</p>
           </div>
         </div>
         {/* Back Side */}
         <div
-          className="absolute w-full h-full backface-hidden bg-black text-white flex border-2 border-black rounded-xl"
+          className="absolute backface-hidden bg-[#EDF1DD] text-black flex inset-0 z-2 "
           style={{ transform: "rotateY(180deg)" }}
         >
-          <span
-            onClick={() => setFlipped(!flipped)}
-            className="absolute right-3 top-3 text-white z-10"
-          >
-            <Rotate3D className="w-5 h-5 text-white hover:text-gray-300 transition animate-bounce" />
-            {/* {flipped ? <EyeOff /> : <RotateCcw />} */}
-          </span>
           <motion.div
-            className="flex flex-col px-6 justify-evenly gap-5 relative py-10"
-            initial={{ y: "-10%", opacity: 0, filter: "blur(10px)" }}
+            className="flex flex-col px-6 gap-5 relative py-10 justify-between rounded-xl"
+            initial={{ y: "10%", opacity: 0, filter: "blur(10px)" }}
             animate={{
-              y: flipped ? 0 : "-10%",
+              y: flipped ? 0 : "10%",
               opacity: flipped ? 1 : 0,
               filter: "blur(0px)",
             }}
             transition={{
               duration: 0.3,
-              // staggerChildren: 0.3,
-              delay: 0.2,
+              delay: 0.1,
             }}
           >
-            <h2 className="text-2xl font-bold mb-2">{title}</h2>
-            <motion.p className="text-sm flex flex-col gap-2">
+            <h2 className="font-bold mb-2 flex flex-col uppercase ">
+              <span className="text-sm">{title.split(" ")[0]}</span>
+              <span className="text-3xl">
+                {title.split(" ").slice(1).join(" ")}
+              </span>
+            </h2>
+            <motion.p className="text-sm flex flex-col gap-2 jborder h-70">
               <span className="font-semibold">
                 Original Title (Japanese): {originalTitle} (
                 {originalTitleRomanised})
               </span>
-              <span className="font-regulark">Director: {director}</span>
+              <span className="">Director: {director}</span>
               <span>Producer: {producer}</span>
               <span>Studio: {studio}</span>
               <span>Release Year: {releaseYear}</span>

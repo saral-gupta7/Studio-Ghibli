@@ -24,12 +24,11 @@ const Films = () => {
         scrollTrigger: {
           trigger: "#film",
           start: "50% bottom",
-          end: "+=100%", // Long enough to scroll cards and then scroll section up
+          end: "+=100%",
           scrub: true,
         },
       });
 
-      // Step 1: Cards slide in from right
       tl.from(elements, {
         x: "100%",
         opacity: 0,
@@ -40,37 +39,26 @@ const Films = () => {
       ScrollTrigger.create({
         trigger: "#film",
         start: "top top",
-        end: "+=50%", // Long enough to scroll cards and then scroll section up
+        end: "+=50%",
         scrub: true,
-        // pin: true,
       });
-      // Step 2: Cards move left and right
       tl.to(elements, {
         x: (i: number) => {
           if (i % 4 === 0 || i % 4 === 1) return -200;
           if (i % 4 === 2 || i % 4 === 3) return 200;
           return 0;
         },
+
         rotation: (i: number) => (i % 4 < 2 ? -5 : 5),
         ease: "power2.inOut",
         duration: 1,
       });
-
-      // Optional: change background
-      tl.to(
-        "#film",
-        {
-          backgroundColor: "#000",
-          color: "#fff",
-        },
-        "<+0.2"
-      );
     });
   }, []);
 
   return (
     <section
-      className="min-h-screen w-full mx-auto bg-[url('/images/film-blackground.jpg')] overflow-hidden text-white px-10"
+      className="min-h-screen w-full mx-auto bg-[url('/images/film-blackground.jpg')] overflow-hidden text-white px-3 sm:px-10"
       id="film"
     >
       <div className="p-10 flex flex-col gap-3 h-1/4">
@@ -82,7 +70,7 @@ const Films = () => {
         </p>
       </div>
       <div
-        className={`grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 h-3/4 rounded-xl gap-5 p-10 place-items-center -mt-3 transition-all duration-300 ${
+        className={`grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 h-3/4 rounded-xl gap-5 p-10 place-items-center -mt-3 transition-all duration-300 ${
           activeCard !== null ? "blur-sm pointer-events-none" : ""
         }`}
         id="card-container"

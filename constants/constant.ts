@@ -13,6 +13,13 @@ export interface GhibliMovie {
   className: string;
 }
 
+export const navItems = [
+  { title: "Gallery", key: "gallery", url: "/gallery" },
+  { title: "Studio", key: "studio", url: "/studio" },
+  { title: "Characters", key: "characters", url: "/characters" },
+  { title: "Films", key: "films", url: "/films" },
+];
+
 export const ghibliMovies: GhibliMovie[] = [
   {
     title: "Spirited Away",
@@ -85,5 +92,4 @@ export const galleryImages = [
   { url: "/images/gallery/kaguyahime.jpg", key: "kaguyahime" },
   { url: "/images/gallery/kimitachi.jpg", key: "kimitachi" },
   { url: "/images/gallery/mimi.jpg", key: "mimi" },
-  { url: "/images/gallery/ponyo.jpg", key: "ponyo" },
 ];
