@@ -1,6 +1,5 @@
 "use client";
 // import Image from "next/image";
-import { Rotate3D } from "lucide-react";
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
 
