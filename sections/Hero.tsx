@@ -3,10 +3,40 @@ import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText, TextPlugin } from "gsap/all";
-import { motion } from "motion/react";
+import { easeInOut, motion } from "motion/react";
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(TextPlugin);
 
+const parentVariant = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+      duration: 0.5,
+      ease: easeInOut,
+    },
+  },
+};
+
+const childVariant = {
+  initial: {
+    opacity: 0,
+    y: 10,
+    filter: "blur(5px)",
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.5,
+      ease: easeInOut,
+    },
+  },
+};
 const Hero = () => {
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -28,12 +58,8 @@ const Hero = () => {
       className="min-h-screen w-full overflow-hidden relative"
       id="hero"
     >
+      <div className="absolute inset-0 h-full w-full object-cover z-2 bg-black/30 backdrop-blur-[1px]"></div>
       <motion.video
-        transition={{
-          duration: 0.5,
-          delay: 0.1,
-          ease: "circInOut",
-        }}
         autoPlay
         muted
         loop
@@ -42,13 +68,24 @@ const Hero = () => {
       >
         <source src="/videos/clipped.mp4" type="video/mp4" />
       </motion.video>
-      <motion.div className="abs-center w-full h-full flex-center flex-col gap-5 text-center max-w-4xl font-semibold px-5 tracking-tight">
-        <h1 className="text-4xl md:text-6xl header font-playfair">
+      <motion.div
+        className="abs-center w-full h-full flex-center flex-col gap-5 text-center max-w-4xl font-semibold px-5 tracking-tight text-[#FFF] z-10"
+        variants={parentVariant}
+        initial="initial"
+        animate="animate"
+      >
+        <motion.h1
+          className="text-3xl sm:text-4xl md:text-6xl header font-playfair"
+          variants={childVariant}
+        >
           Begin your journey through the magical worlds of Ghibli.
-        </h1>
-        <p className="text-md md:text-2xl header font-playfair">
+        </motion.h1>
+        <motion.p
+          className="text-md md:text-2xl header font-playfair"
+          variants={childVariant}
+        >
           Where dreams take flight and stories live forever.
-        </p>
+        </motion.p>
       </motion.div>
     </motion.section>
   );

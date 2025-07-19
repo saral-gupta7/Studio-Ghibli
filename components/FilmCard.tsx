@@ -68,7 +68,7 @@ const FilmCard = ({
     >
       <motion.div
         onClick={() => setFlipped(!flipped)}
-        className="w-full h-full relative"
+        className="w-full h-full relative "
         style={{ transformStyle: "preserve-3d" }}
         variants={cardVariant}
         transition={{
@@ -78,7 +78,7 @@ const FilmCard = ({
       >
         {/* Front Side */}
         <div
-          className={`inset-0 backface-hidden absolute  ${
+          className={`inset-0 backface-hidden absolute ${
             flipped ? "pointer-events-none" : "pointer-events-auto"
           } group`}
         >
@@ -94,10 +94,18 @@ const FilmCard = ({
           {/* overlays */}
           <div className="z-1 gradient-text absolute bottom-0 w-full flex flex-col gap-2 h-45"></div>
 
-          <div className="absolute bottom-5 text-white z-2 px-5 py-2 flex flex-col gap-2">
+          <motion.div
+            className="absolute bottom-5 text-white z-2 px-5 py-2 flex flex-col gap-2"
+            initial={{ x: -10, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{
+              duration: 0.3,
+              delay: 0.3,
+            }}
+          >
             <h1 className="text-2xl font-bold font-playfair">{title}</h1>
             <p className="text-xs text-white/90">{description}</p>
-          </div>
+          </motion.div>
         </div>
         {/* Back Side */}
         <div

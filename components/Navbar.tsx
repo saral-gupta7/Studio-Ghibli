@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 const Navbar = () => {
   return (
-    <article className="fixed w-full z-50 px-20 flex items-center justify-between py-5 text-white backdrop-blur-xs">
+    <article className="fixed w-full z-50 px-10  sm:px-20 flex items-center justify-between py-5 text-white backdrop-blur-xs">
       <div className="shrink-0">
         <Image
           src={"/images/logo.png"}

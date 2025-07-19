@@ -19,7 +19,7 @@ const Films = () => {
     const mm = gsap.matchMedia();
     const elements = gsap.utils.toArray(".card");
 
-    mm.add("(min-width: 1024px)", () => {
+    mm.add("(min-width: 650px)", () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#film",
@@ -58,7 +58,7 @@ const Films = () => {
 
   return (
     <section
-      className="min-h-screen w-full mx-auto bg-[url('/images/film-blackground.jpg')] overflow-hidden text-white px-3 sm:px-10"
+      className="min-h-screen w-full mx-auto overflow-hidden text-white px-3 sm:px-10"
       id="film"
     >
       <div className="p-10 flex flex-col gap-3 h-1/4">
