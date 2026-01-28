@@ -7,6 +7,15 @@ import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger);
 
+const parentVariant = {
+  initial: { opacity: 1 },
+  whileHover: { opacity: 1 },
+};
+
+const childVariant = {
+  initial: { opacity: 0, scaleX: 0.5, borderRadius: "100%" },
+  whileHover: { opacity: 1, scaleX: 1, borderRadius: 0 },
+};
 const imageStyle = {
   width: "240px",
   height: "320px",
@@ -48,7 +57,6 @@ const Gallery = () => {
         y: (i: number) => {
           return 100 * i;
         },
-        // opacity: 0,
       });
     });
   }, []);
@@ -62,14 +70,14 @@ const Gallery = () => {
           Ghibli Classics You Can&apos;t Miss
         </h1>
         <div className="flex flex-wrap gap-8 justify-center" id="card-layer-1">
-          {galleryImages.map(({ url, key }, idx) => (
+          {galleryImages.map(({ url, key, text }, idx) => (
             <motion.div
-              className="flex-center image"
+              className="group relative flex-center image"
               id={`image-${idx}`}
               key={key}
-              whileTap={{
-                x: 100,
-              }}
+              variants={parentVariant}
+              initial="initial"
+              whileHover="whileHover"
             >
               <Image
                 src={url}
@@ -78,6 +86,15 @@ const Gallery = () => {
                 height={240}
                 style={imageStyle}
               />
+              <motion.div
+                className="absolute text-white bg-black/50 inset-0 z-10 flex-center px-3 text-center"
+                variants={childVariant}
+                transition={{
+                  duration: 0.3,
+                }}
+              >
+                <h1>{text}</h1>
+              </motion.div>
             </motion.div>
           ))}
         </div>

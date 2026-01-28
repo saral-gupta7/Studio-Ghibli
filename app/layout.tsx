@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Studio Ghibli Themed Website",
-  description: "Crafted a Sleek UI for a Studio Ghilbi themed website.",
+  description: "My view of how a Studio Ghibli website should look!",
   icons: {
     icon: "/favicon.svg",
   },
@@ -32,15 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} antialiased bg-black`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} antialiased`}
       >
-        {/*         <div className="hidden md:block">
-          <Loader />
-        </div> */}
         <Navbar />
-
         {children}
       </body>
     </html>

@@ -17,7 +17,7 @@ export const navItems = [
   { title: "Gallery", key: "gallery", url: "/gallery" },
   { title: "Studio", key: "studio", url: "/studio" },
   { title: "Characters", key: "characters", url: "/characters" },
-  { title: "Films", key: "films", url: "/films" },
+  { title: "Films", key: "films", url: "#film" },
 ];
 
 export const ghibliMovies: GhibliMovie[] = [
@@ -86,10 +86,30 @@ export const ghibliMovies: GhibliMovie[] = [
 ];
 
 export const galleryImages = [
-  { url: "/images/gallery/aya.jpg", key: "aya" },
-  { url: "/images/gallery/chihiro.jpg", key: "chihiro" },
-  { url: "/images/gallery/howl.jpg", key: "howl" },
-  { url: "/images/gallery/kaguyahime.jpg", key: "kaguyahime" },
-  { url: "/images/gallery/kimitachi.jpg", key: "kimitachi" },
-  { url: "/images/gallery/mimi.jpg", key: "mimi" },
+  { url: "/images/gallery/aya.webp", key: "aya", text: "Earwig and the Witch" },
+  {
+    url: "/images/gallery/chihiro.webp",
+    key: "chihiro",
+    text: "Spirited Away",
+  },
+  {
+    url: "/images/gallery/howl.webp",
+    key: "howl",
+    text: "Howl's Moving Castle",
+  },
+  {
+    url: "/images/gallery/kaguyahime.webp",
+    key: "kaguyahime",
+    text: "The Tale of the Princess Kaguya",
+  },
+  {
+    url: "/images/gallery/kimitachi.webp",
+    key: "kimitachi",
+    text: "The Boy and the Heron",
+  },
+  {
+    url: "/images/gallery/mimi.webp",
+    key: "mimi",
+    text: "Whisper of the Heart",
+  },
 ];
